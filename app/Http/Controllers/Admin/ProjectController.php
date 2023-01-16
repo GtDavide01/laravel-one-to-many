@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -44,7 +46,7 @@ class ProjectController extends Controller
         $data['slug'] = Project::generateSlug($data['title']);
         // salvo tutto nel database
         if ($request->hasFile('image')) {
-            $path = Storage::put('project_images', $request->image);
+            $path = Storage::put('images_pro', $request->image);
             $data['image'] = $path;
         }
         $project = Project::create($data);
@@ -71,7 +73,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -90,7 +93,7 @@ class ProjectController extends Controller
             if ($project->image) {
                 Storage::delete($project->image);
             }
-            $path = Storage::put('projects_images', $request->image);
+            $path = Storage::put('images_pro', $request->image);
             $data['image'] = $path;
         }
         // salvo tutto nel database

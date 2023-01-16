@@ -4,7 +4,6 @@
     <div class="container">
         <h4 class="text-center text-primary mt-3">
             {{ $project->types_id ? $project->types_id->name : 'Nessuna categoria' }}
-            {{-- {{ $post->category?->name }} --}}
         </h4>
         <h1 class="text-center mt-3"> Nome Progetto : {{ $project->title }}</h1>
         <div class="d-flex justify-content-between mt-3">
